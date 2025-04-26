@@ -1,0 +1,365 @@
+\documentclass[a4paper,12pt,numbers=noenddot]{scrreprt}
+\setlength{\headheight}{61.24997pt} %Definition der KOMA-Textklasse
+\usepackage{amsmath}
+\usepackage{tikz} % Add this line to include the tikz package
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{ragged2e} % Add this line to include the ragged2e package
+%\justifying % Add this command to justify the text
+\usepackage{amsfonts}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Set up fancy header/footer
+\pagestyle{fancy}
+\fancyhead[LO,L]{Paula Labra}
+\fancyhead[CO,C]{620438-2 Apunte}
+\fancyhead[RO,R]{\today}
+\fancyfoot[LO,L]{}
+\fancyfoot[CO,C]{\thepage}
+\fancyfoot[RO,R]{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+% Add the logo in the header
+\lhead{\includegraphics[width=2cm]{LogoCat.png}} % Replace "logo.png" with the filename of your logo image
+
+\title{Teoría de Sistemas}
+
+% Contenido del documento
+\section*{Concepto de señal}
+    \begin{itemize}
+    \item \textbf{Señal:} Es una función de una o más variables 
+    independientes que contiene información acerca de la naturaleza de un fenómeno [Haykin].
+    \begin{center}
+    \begin{tikzpicture}
+        % Define the x and y coordinates
+        \coordinate (A) at (0,0);
+        \coordinate (X) at (0.25,0.5);
+        \coordinate (Y) at (0.5,-1);
+        \coordinate (Z) at (1,0.5);
+        \coordinate (B) at (0.5,1);
+        \coordinate (C) at (1,-1);
+        \coordinate (D) at (1.5,0);
+        \coordinate (E) at (2,1);
+        \coordinate (F) at (2.5,-1);
+        \coordinate (G) at (3,0);
+        
+        % Draw the axes
+        \draw[->] (-0.5,0) -- (3.5,0) node[right] {$t$ (tiempo)};
+        \draw[->] (0,-1.5) -- (0,1.5) node[above] {$x(t)$};
+        
+        % Plot the functions
+        \draw[blue, thick] (A) sin (B) cos (C) sin (D) cos (E) sin (F) cos (G);
+        \draw[red, thick] (A) sin (B) cos (C) sin (D) cos (E) sin (F) cos (G);
+        \draw[green, thick] (A) sin (B) cos (C) sin (D) cos (E) sin (F) cos (G);
+
+    \end{tikzpicture}
+    \end{center}
+    \end{itemize}
+
+\section*{Notas extras}
+\begin{itemize}
+    \item[] \textbf{Nota:} Cualquier cosa que varía en el tiempo es una señal.
+\end{itemize}
+    
+\section*{Concepto de sistema}
+    \begin{itemize}
+    \item \textbf{Sistema: [Haykin]} Conjunto de elementos que interactúan 
+    entre sí para lograr un objetivo.
+    \item[]\textbf{Otra definición:} Entidad que manipula una o más señales para llevar a 
+    cabo una función, produciendo de ese modo nuestras señales.
+    \item \textbf{Sistema: [puente]} Conjunto de elementos físicos o abstractos
+    relacionados entre si de forma que modificaciones o alteraciones en determinadas
+    magnitudes (variables, señales) de uno de ellos puedan inferir o ser influidos
+    las de los demás. 
+\end{itemize}
+
+\section*{Representaciones interna y externa}
+\begin{itemize}
+    \item \textbf{Representación externa:} Análisis a partir de las manifestaciones
+    externas del sistema. Filosofía de \textacutedbl la caja negra\textacutedbl. Relación
+    entrada/salida. (Función de transferencia - misma entrada, distinta salida)
+\end{itemize}
+
+\begin{equation*}
+    f(u, y, \dot{u}, \dot{y}, \ddot{u}, \ddot{y}, ...) = 0
+\end{equation*} \\
+\textbf{Donde:} $u$ es la entrada, $y$ es la salida, $\dot{u}$ es la primera 
+derivada de la entrada, $\dot{y}$ es la primera derivada de la salida, $\ddot{u}$ 
+es la segunda derivada de la entrada, $\ddot{y}$ es la segunda derivada de la salida, etc. \\
+\\
+Si nos fijamos, la ecuación anterior es una ecuación diferencial. Lo que significa
+que la primera derivada representa la velocidad, y la segunda derivada representa 
+la aceleración.
+
+\begin{itemize}
+\item \textbf{Representación interna:} descripción del sistema a través de
+variables internas denominadas \textbf{variables de estado}: conjunto de variables
+tales que siendo conocidas para $t=t_0$, y conocida la entrada $t \geq t_0$, 
+permite obtener la salida para todo 
+$t \geq t_0$. \\
+\end{itemize}
+
+\begin{equation*}
+    \dot{X}_i = f_i(x_1, x_2, ... , x_n, u)
+\end{equation*} 
+\begin{equation*}
+    y = g(x_1, x_2, ... , x_n, u)
+\end{equation*} \\
+
+\begin{center}
+\begin{tikzpicture}
+
+    % Draw the rectangle
+    \draw (0,0) rectangle (4,2);
+    
+    % Add the text "Sistema" in the middle
+    \node at (2,1) {Sistema};
+
+    \node at (-3.5,1) {Entradas};
+    \node at (-2,1.5) {$u_1$};
+    \node at (-2,1.25) {$u_2$};
+    \node at (-2,1) {$u_3$};
+    \node at (-2,0.77) {$...$};
+    \node at (-2,0.5) {$u_p$};
+
+    \node at (7.5,1) {Salidas};
+    \node at (6,1.5) {$y_1$};
+    \node at (6,1.25) {$y_2$};
+    \node at (6,1) {$y_3$};
+    \node at (6,0.77) {$...$};
+    \node at (6,0.5) {$y_q$};
+
+    \node at (3,4.5) {Perturbaciones};
+    \node at (2,4) {$z_1$};
+    \node at (2.4,4) {$z_2$};
+    \node at (2.8,4) {$z_3$};
+    \node at (3.2,4) {$...$};
+    \node at (3.6,4) {$z_r$};
+    \node[font=\tiny, text width=2.5cm] at (2,0.5) {Variables de estado: $x_1, x_2, ..., x_n$};
+
+    % Add arrows on the left side
+    \draw[->] (-1.5,1.5) -- (0,1.5);
+    \draw[->] (-1.5,1.25) -- (0,1.25); 
+    \draw[->] (-1.5,1) -- (0,1);
+    \draw[->] (-1.5,0.77) -- (0,0.77);
+    \draw[->] (-1.5,0.5) -- (0,0.5);
+    
+    % Add arrows on the right side
+    \draw[->] (4,1) -- (5.5,1);
+    \draw[->] (4,0.5) -- (5.5,0.5);
+    \draw[->] (4,0.77) -- (5.5,0.77);
+    \draw[->] (4,1.5) -- (5.5,1.5);
+    \draw[->] (4,1.25) -- (5.5,1.25);
+    
+    % Add arrows on the top
+    \draw[->] (2,3.5) -- (2,2);
+    \draw[->] (2.4,3.5) -- (2.4,2);
+    \draw[->] (2.8,3.5) -- (2.8,2); 
+    \draw[->] (3.2,3.5) -- (3.2,2);
+    \draw[->] (3.6,3.5) -- (3.6,2);
+    
+\end{tikzpicture}
+\end{center}
+
+OBS: Las Perturbaciones son señales o "cosas" que afectan al sistema, 
+pero que no son controlables.
+
+\section*{Tipos de sistemas}
+\begin{itemize}
+    \item {En bucle abierto / Realimentados}
+    \item {Lineales / No lineales}
+    \item {De parámetros concentrados / Distribuidos}
+    \item {Estacionarios / Variantes}
+    \item {Deterministas / Estocásticos}
+    \item {Monovariables / Multivariables}
+    \item {De tiempo continuo / Discreto}
+\end{itemize}
+
+\section*{Sistemas en bucle abierto}
+\begin{itemize}
+    \item \textbf{Bucle abierto:} La señal de entrada actúa directamente
+    sobre el controlador del sistema.
+    \item[] \textbf{Ejemplo de elementos de control:} cargador de celular,
+    zona de nuestro cerebro.
+\end{itemize}
+
+
+\begin{center}
+\begin{tikzpicture}
+
+% Draw the rectangle
+\draw (0,0) rectangle (3,2);
+\draw (0,0) rectangle (3,2);
+% Add the text in the middle
+\node[text width=2.5cm, align=center] at (1.5,1) {Elementos de control};
+\draw (7.5,0) rectangle (4.5,2);
+\draw (7.5,0) rectangle (4.5,2);
+\node[text width=2.5cm, align=center] at (6,1) {Planta o proceso};
+
+
+\node at (-2.3,1.5) {Entrada};
+\draw[->] (-1.5,1) -- (0,1);
+\draw[->] (3,1) -- (4.5,1);
+\node at (9.5,1.5) {Salida};
+\draw[->] (7.5,1) -- (9,1);
+
+\end{tikzpicture}
+\end{center}
+
+\section*{Sistemas realimentados}
+\begin{itemize}
+    \item \textbf{Bucle cerrado (realimentados):} La señal de entrada, antes de ser
+    introducida en el controlador, es modificada en función de la salida.
+\end{itemize}
+
+
+\begin{center}
+    \begin{tikzpicture}
+    
+    % Draw the rectangle
+    \draw (0,0) rectangle (3,2);
+    \draw (0,0) rectangle (3,2);
+    % Add the text in the middle
+    \node[text width=2.5cm, align=center] at (1.5,1) {Elementos de control};
+    \draw (7.5,0) rectangle (4.5,2);
+    \draw (7.5,0) rectangle (4.5,2);
+    \node[text width=2.5cm, align=center] at (6,1) {Planta o proceso};
+    \draw (5,-3) rectangle (2,-1);
+    \draw (5,-3) rectangle (2,-1);
+    \node[text width=4cm, align=center] at (3.5,-2) {Elementos de realimentación};
+    
+    \draw (-1.79,1) circle (0.3);
+    \node at (-3,1.5) {Entrada +};
+    \node at (-2.2,0.5) {-};
+    \draw[->] (-4,1) -- (-2.1,1);
+    \draw[->] (-1.5,1) -- (0,1);
+    \draw[->] (3,1) -- (4.5,1);
+    \node at (9.5,1.5) {Salida};
+    \draw[->] (7.5,1) -- (9,1);
+    \draw[->] (8.5,1) -- (8.5,-2) -- (5,-2) -- (5,-2);
+    \draw[->] (2,-2) -- (2,-2) -- (-1.8,-2) -- (-1.8,0.7);
+    
+    \end{tikzpicture}
+    \end{center}
+
+    \newpage
+    \textbf{Esquema típico de control. Ejemplo de la ducha:} el grifo del
+    agua caliente está abierto al máximo. Ajustamos la temperatira del agua con el grifo
+    de agua fría.
+
+    \begin{center}
+    \includegraphics[width=17cm]{Diagrama sin título-Página-2.png}
+    \end{center}
+    \textbf{Ejemplo de perturbación:} alguien abre el grifo de agua caliente en otra parte 
+    de la casa, llega menos agua caliente a la ducha y la mezcla se enfría. Gracias a la realimentación,
+    el cerebro detecta la nueva situación y da la orden de cerrar un poco el grifo de agua fría.
+    
+    \section*{Sistemas lineales / no lineales}
+    Los sistemas lineales son aquellos que cumplen con el \textbf{principio de superposición}.
+
+    Si
+    \begin{equation*}
+        u_1(t) \rightarrow y_1(t)
+    \end{equation*}
+
+    \begin{equation*}
+        u_2(t) \rightarrow y_2(t)
+    \end{equation*}
+
+    Entonces
+    \begin{equation*}
+        \alpha u_1(t) + \beta u_2(t) \rightarrow \alpha y_1(t) + \beta y_2(t)
+    \end{equation*}
+    \begin{equation*}
+        \alpha, \beta \in \mathbb{R}
+    \end{equation*}
+
+    \section*{Sistemas de parámetros concentrados / distribuidos}
+    \begin{itemize}
+        \item \textbf{Parámetros concentrados:} Los parámetros del sistema son constantes
+        en el tiempo y en el espacio.
+        \item \textbf{Parámetros distribuidos:} Los parámetros del sistema son variables
+        en el tiempo y en el espacio.
+    \end{itemize}
+
+    \section*{Sistemas estacionarios / variantes}
+    \begin{itemize}
+        \item \textbf{Estacionarios:} Los parámetros del sistema son constantes en el tiempo.
+        A la misma entrada en distintos instantes, responden igual.
+        \item \textbf{Variantes:} Los parámetros o los comportamientos del sistema 
+        son variables en el tiempo.
+    \end{itemize}
+
+    \section*{Sistemas deterministas / estocásticos}
+    \begin{itemize}
+        \item \textbf{Deterministas:} Si conocemos la entrada, conocemos la salida.
+        \item \textbf{Estocásticos:} Si conocemos la entrada, no podemos predecir la salida.
+    \end{itemize}
+
+    \section*{Sistemas monovariables / multivariables}
+    \begin{itemize}
+        \item \textbf{Monovariables:} Un solo tipo de entrada y un solo tipo de salida.
+        \textbf{SISO}(Single Input Single Output).
+        \item \textbf{Multivariables:} Más de un tipo de entrada \textbf{MISO}(Multiple Input 
+        Single Output) y más de un tipo de salida \textbf{SIMO}(Single Input Multiple Output) o
+        ambas \textbf{MIMO}(Multiple Input Multiple Output).
+    \end{itemize}
+
+    \section*{Sistemas continuos / discretos}
+    \begin{itemize}
+        \item \textbf{Continuos:} Las señales de entrada y salida son variables continuas en el tiempo.
+        \item \textbf{Discretos:} Las señales de entrada y salida son discretas en el tiempo.
+        Suelen ser resultado de un \textbf{muestreo} de señales continuas.
+    \end{itemize}
+
+
+    \begin{minipage}[t]{0.45\textwidth}
+        \begin{tikzpicture}[scale=0.5]
+            % Define the x and y coordinates
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (1,0);
+            \coordinate (C) at (2,0);
+            \coordinate (D) at (3,0);
+            \coordinate (E) at (4,0);
+            \coordinate (F) at (5,0);
+            \coordinate (G) at (6,0);
+            
+            % Draw the axes
+            \draw[->] (-0.5,0) -- (6.5,0) node[right] {$t$ (continuo)};
+            \draw[->] (0,-1.5) -- (0,1.5) node[above] {$x[t]$};
+            
+            % Plot the function
+            \draw[blue, thick, samples=100, domain=0:6, smooth] plot (\x, {sin(\x r)});
+        \end{tikzpicture}
+    \end{minipage}
+    \begin{minipage}[t]{0.45\textwidth}
+        \begin{tikzpicture}[scale=0.5]
+            % Define the x and y coordinates
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (1,0);
+            \coordinate (C) at (2,0);
+            \coordinate (D) at (3,0);
+            \coordinate (E) at (4,0);
+            \coordinate (F) at (5,0);
+            \coordinate (G) at (6,0);
+            
+            % Draw the axes
+            \draw[->] (-0.5,0) -- (6.5,0) node[right] {$k$ (discreto)};
+            \draw[->] (0,-1.5) -- (0,1.5) node[above] {$x[k]$};
+            
+            % Plot the points
+            \foreach \x in {0,1,2,3,4,5,6}
+            \filldraw[blue] (\x, {sin(\x r)}) circle (2pt);
+        \end{tikzpicture}
+    \end{minipage}
+    
+\newpage
+    \section*{Ecuaciones diferenciales y dinámica}
+
+
+\end{document}
